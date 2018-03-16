@@ -1,2 +1,4 @@
-# FNFT
-An implementation of federated non-fungible tokens (FNFTs) for the Zone Protocol
+# DNFT
+An implementation of delegated non-fungible tokens (DNFTs) for the Zone Protocol. Documentation and ERC proposal coming soon.
+
+

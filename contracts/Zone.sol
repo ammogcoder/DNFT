@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-import "./FNFT.sol";
+import "./DNFT.sol";
 
 contract Zone {
 
@@ -20,11 +20,11 @@ contract Zone {
 		owner = msg.sender;
 	}
 	
-	function makeNewFNFT(string _writ, string _metadata, uint _balance, address _owner)
+	function makeNewDNFT(string _writ, string _metadata, uint _balance, address _owner)
 		public
 	{
 		require(owner == msg.sender);
-		address newzone = new FNFT(_writ, _metadata, _balance, _owner);
+		address newzone = new DNFT(_writ, _metadata, _balance, _owner);
 
 		require(newzone != address(0));
 		zones[newzone] = true;

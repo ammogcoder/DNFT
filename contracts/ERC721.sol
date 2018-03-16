@@ -14,5 +14,4 @@ interface ERC721 {
   function approve(address _to, uint256 _tokenId) public;
   function transferFrom(address _from, address _to, uint256 _tokenId) public payable;
   function getApproved(uint256 _tokenId) public view returns (address);
-
 }

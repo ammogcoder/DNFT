@@ -4,10 +4,10 @@ import "./ERC721.sol";
 import "./ERC921.sol";
 import "./SafeMath.sol";
 
-contract FNFT is ERC721, ERC921 {
+contract DNFT is ERC721, ERC921 {
   using SafeMath for uint256;
 
-  // total amount of fnft tokens in zone.
+  // total amount of DNFT tokens in zone.
   uint private totalTokens;
 
   // maps token id to owning address
@@ -237,7 +237,7 @@ contract FNFT is ERC721, ERC921 {
     }
 
 
-    /// @dev allows tokenholder to delegate (mint) a new FNFT at a higher level
+    /// @dev allows tokenholder to delegate (mint) a new DNFT at a higher level
   function delegate(uint256 _tokenId, uint256 _writs, address _newowner) 
     public
     onlyOwnerOf(_tokenId)

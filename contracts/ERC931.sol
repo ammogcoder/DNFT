@@ -2,16 +2,16 @@ pragma solidity ^0.4.17;
 
 import "./ERC721.sol";
 
-/// @title ERC-921 Federated Non-Fungible Token Standard (Zones)
-// For zone property registries. Base FNFT established by jurisdiction.
+/// @title ERC-931 Delegated Non-Fungible Token Standard (Zones)
+// For zone property registries. Base DNFT established by jurisdiction.
 // Owners of a token are allowed to federate new tokens at a higher level of abstraction.
 
-interface ERC921 {
+interface ERC931 {
 
-	/// @dev emitted whenever a new FNFT subdomain is delegated.
+	/// @dev emitted whenever a new DNFT subdomain is delegated.
 	event Delegate(uint256 _tokenId, uint256 _delegate, address indexed _owner);
 
-	/// @dev emitted whenever an FNFT subdomain is revoked
+	/// @dev emitted whenever an DNFT subdomain is revoked
 	event Revoke(uint _tokenId, uint256 _delegate);
 
 	/// @dev checks whether delegate tokenId is a subdomain of _tokenId
@@ -23,7 +23,7 @@ interface ERC921 {
 	/// @dev returns the balance of writs (fungible delegated physical-space units)
 	function available(uint256 _tokenId) public view returns (uint _writs);
 
-	/// @dev allows tokenholder to delegate (mint) a new FNFT at a higher level
+	/// @dev allows tokenholder to delegate (mint) a new DNFT at a higher level
 	function delegate(uint256 _tokenId, uint256 _delegate) public payable;
 
 	/// @dev allows owner to revoke a delegate NFT under its jurisdiction.
