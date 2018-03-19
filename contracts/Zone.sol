@@ -2,16 +2,20 @@ pragma solidity ^0.4.18;
 
 import "./DNFT.sol";
 
-contract Zone {
 
-	address owner;
+contract Zone is DNFT {
 
-	mapping(address => bool) zones;
+	address public ZoneAuthority;
+
+	// Ordinates are contracts which own DNFTs and have more complex management and conditionals.
+	// Example ordinates are options and quobands.
+	// tokenId => Ordinate Address
+	mapping(uint256 => address) private ordinates;
 
 	event ZoneCreation(
 		address indexed zone, 
 		address indexed owner, 
-		string writ, 
+		string writ,
 		uint balance
 	);
 
@@ -31,4 +35,6 @@ contract Zone {
 
 		emit ZoneCreation(newzone, _owner, _writ, _balance);
 	}
+
+	function newOrdinate()
 }
