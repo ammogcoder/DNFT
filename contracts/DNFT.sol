@@ -4,7 +4,7 @@ import "./ERC721.sol";
 import "./ERC921.sol";
 import "./SafeMath.sol";
 
-contract DNFT is ERC721, ERC921 {
+contract DNFT is ERC721, ERC931 {
   using SafeMath for uint256;
 
   // total amount of DNFT tokens in zone.
