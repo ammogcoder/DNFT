@@ -4,7 +4,7 @@ import "./ERC721.sol";
 import "./ERC921.sol";
 import "./SafeMath.sol";
 
-contract DNFT is ERC721, ERC931 {
+contract DNFT is ERC721, ERCX {
   using SafeMath for uint256;
 
   // total amount of DNFT tokens in zone.
@@ -16,7 +16,7 @@ contract DNFT is ERC721, ERC931 {
   // maps token id to string metadata uri
   mapping(uint256 => string) private metadata;
 
-  // maps token id to fungible land units (writs).
+  // maps token id to fungible land units (quantity).
   mapping(uint256 => uint256) private writs;
 
   // maps child delegate token to parent ID
