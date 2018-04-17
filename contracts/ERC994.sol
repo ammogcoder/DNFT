@@ -1,16 +1,16 @@
 pragma solidity ^0.4.17;
 /// @title DNFT Delegated Non-Fungible Token Standard
 
-interface DNFT {
+contract ERC994 {
 
-	/// @dev checks if _from is a delegate of _tokenId.
-	function origin(uint256 _from, uint256 _tokenId) public view returns (bool);
+	/// @dev checks if _child is a delegate of _parent.
+	function isParent(uint256 _child, uint256 _parent) public view returns (bool);
 	
 	/// @dev gets the abstraction depth of _tokenId. 
 	function getHeight(uint256 _tokenId) public view returns (uint256);
 	
-	/// @dev returns the balance of writs.
-	function available(uint256 _tokenId) public view returns (uint256);
+	/// @dev returns the fungible quantity balance of DNFT.
+	function quantity(uint256 _tokenId) public view returns (uint256);
 	
 	/// @dev allows tokenholder to delegate new DNFT.
 	function delegate(uint256 _tokenId, uint256 _delegate) public;

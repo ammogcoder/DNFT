@@ -1,14 +1,20 @@
 pragma solidity ^0.4.18;
 
 import "./ERC721.sol";
-import "./ERC921.sol";
+import "./ERC994.sol";
 import "./SafeMath.sol";
 
-contract DNFT is ERC721, ERCX {
+contract DNFT is ERC721, ERC994 {
   using SafeMath for uint256;
 
   // total amount of DNFT tokens in zone.
-  uint private totalTokens;
+  uint256 private totalTokens;
+
+  // the name of the DNFT zone.
+  uint256 internal name;
+
+  // the symbol used for the zone.
+  uint256 internal symbol;
 
   // maps token id to owning address
   mapping(uint256 => address) private owner;
@@ -16,11 +22,11 @@ contract DNFT is ERC721, ERCX {
   // maps token id to string metadata uri
   mapping(uint256 => string) private metadata;
 
-  // maps token id to fungible land units (quantity).
-  mapping(uint256 => uint256) private writs;
+  // maps token id to fungible quantity units.
+  mapping(uint256 => uint256) private quantities;
 
   // maps child delegate token to parent ID
-  mapping(uint256 => uint256) private sub;
+  mapping(uint256 => uint256) private parent;
 
   // maps token id to depth index
   mapping(uint256 => uint256) private height;
@@ -113,6 +119,21 @@ contract DNFT is ERC721, ERCX {
     }
 
     /**
+    * @dev Checks if given child tokenId is a delegate of _parent
+    * @param _child the uint256 tokenId of the child
+    * @param _parent the uint256 tokenId of the parent
+    * @return bool true if _parent is parent
+    */
+    function isParent(uint256 _child, uint256 _parent)
+      public
+      view
+      returns (bool)
+    {
+      require(parent[_child] == _parent);
+      return true;
+    }
+
+    /**
     * @dev Gets the owner of the specified token ID
     * @param _tokenId uint256 ID of the token to query the owner of
     * @return owner address currently marked as the owner of the given token ID
@@ -151,7 +172,7 @@ contract DNFT is ERC721, ERCX {
       view
       returns(bool _delegatedFrom)
     {
-      return sub[_delegate] == _tokenId;
+      return parent[_delegate] == _tokenId;
     }
 
     /**
@@ -165,7 +186,7 @@ contract DNFT is ERC721, ERCX {
       view 
       returns (uint256 _writs)
     {
-      return writs[_tokenId];
+      return quantities[_tokenId];
     }
 
     /** 
@@ -229,8 +250,8 @@ contract DNFT is ERC721, ERCX {
       public
       onlyExtantToken(_tokenId)
     {
-        uint _subtoken = sub[_tokenId];
-        address _subowner = owner[_subtoken];
+        uint _child = parent[_tokenId];
+        address _subowner = owner[_child];
       require(_subowner == msg.sender);
       metadata[_tokenId] = _metadata;
       emit Metadata(_tokenId, _metadata);
@@ -250,11 +271,11 @@ contract DNFT is ERC721, ERCX {
     uint256 newTokenId = totalTokens;
 
     owner[newTokenId] = _newowner;
-    sub[newTokenId] = _tokenId;
+    parent[newTokenId] = _tokenId;
     height[newTokenId] = newHeight;
 
-    writs[_tokenId].sub(_writs);
-    writs[newTokenId] = _writs;
+    quantities[_tokenId].sub(_writs);
+    quantities[newTokenId] = _writs;
 
     addToInventory(_newowner, newTokenId);
 
@@ -269,7 +290,7 @@ contract DNFT is ERC721, ERCX {
     onlyOwnerOf(_tokenId)
     onlyExtantToken(_tokenId)
   {
-    require(sub[_delegate] == _tokenId);
+    require(parent[_delegate] == _tokenId);
 
     address from = owner[_delegate];
 
